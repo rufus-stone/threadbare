@@ -51,4 +51,4 @@ jobs:
     - name: Run on Windows
       if: ${{matrix.config.os == 'windows-latest'}}
       working-directory: ${{runner.workspace}}
-      run: ${{runner.workspace}}\\build\\threadbare.exe
+      run: ${{runner.workspace}}\\build\\Release\\threadbare.exe
