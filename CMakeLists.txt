@@ -2,14 +2,14 @@ cmake_minimum_required(VERSION 3.15...3.18)
 
 # Set up our project
 project(
-  my_proj
+  threadbare
   VERSION 0.1.0
-  DESCRIPTION "Fill me in"
-  HOMEPAGE_URL "Fill me in"
+  DESCRIPTION "Practising multi-threading"
+  HOMEPAGE_URL "https://github.com/rufus-stone/threadbare"
   LANGUAGES CXX)
 
 # Create our executable
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/job.cpp)
 
 # We're using C++17
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
@@ -30,9 +30,3 @@ target_include_directories(${PROJECT_NAME}
 
 # Link libraries to executable
 target_link_libraries(${PROJECT_NAME} PRIVATE CONAN_PKG::spdlog)
-
-include(CTest) # This adds the BUILD_TESTING option (ON by default)
-if(BUILD_TESTING)
-  enable_testing()
-  add_subdirectory(test)
-endif()

@@ -1,4 +1,4 @@
-name: 'Build and Test'
+name: 'Build and Run'
 
 on: [push]
 
@@ -37,18 +37,18 @@ jobs:
         CXX: ${{matrix.config.cxx}}
       run: cmake -S . -B ${{runner.workspace}}/build  -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}}
 
-    - name: Build Tests
+    - name: Build
       working-directory: ${{runner.workspace}}
       shell: bash
-      run: cmake --build build --config ${{matrix.config.build_type}} --target my_proj_tests
+      run: cmake --build build --config ${{matrix.config.build_type}} --target threadbare
 
-    - name: Run Tests on Linux
+    - name: Run on Linux
       if: ${{matrix.config.os == 'ubuntu-latest'}}
       working-directory: ${{runner.workspace}}
       shell: bash
-      run: ${{runner.workspace}}/build/bin/my_proj_tests
+      run: ${{runner.workspace}}/build/threadbare
 
-    - name: Run Tests on Windows
+    - name: Run on Windows
       if: ${{matrix.config.os == 'windows-latest'}}
       working-directory: ${{runner.workspace}}
-      run: ${{runner.workspace}}\\build\\bin\\my_proj_tests.exe
+      run: ${{runner.workspace}}\\build\\threadbare.exe
