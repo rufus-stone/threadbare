@@ -12,6 +12,8 @@
 
 #include "job.hpp"
 
+#include "pod.hpp"
+
 using namespace std::chrono_literals;
 
 int main()
@@ -59,6 +61,30 @@ int main()
   {
     spdlog::info("result: {}", result.get());
   }
+
+
+  // Read/write string
+  auto p = tb::pod{};
+
+  auto f = std::async(std::launch::async, [&p]() {
+    p.write_s1("This is a big string wouldn't you say????");
+    std::this_thread::sleep_for(2s);
+  });
+
+  while (true)
+  {
+    spdlog::info("s1: {}", p.read_s1());
+
+    if (p.read_s1() != "asdf")
+    {
+      spdlog::info("!! s1: {}", p.read_s1());
+      break;
+    }
+  }
+
+  f.get();
+
+  spdlog::info("s1: {}", p.read_s1());
 
   return EXIT_SUCCESS;
 }
